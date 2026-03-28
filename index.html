@@ -4,69 +4,543 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Презентация помета — Lordes Pride</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
     body {
-      font-family: Georgia, "Times New Roman", serif;
-      max-width: 36rem;
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Manrope", system-ui, sans-serif;
+      color: #e8e4dc;
+      line-height: 1.65;
+      background: linear-gradient(
+        125deg,
+        #0d1117 0%,
+        #1a2744 25%,
+        #243b55 50%,
+        #1a2744 75%,
+        #0d1117 100%
+      );
+      background-size: 320% 320%;
+      animation: bgDrift 22s ease-in-out infinite;
+      padding: clamp(1.25rem, 4vw, 2.5rem);
+    }
+
+    @keyframes bgDrift {
+      0%, 100% { background-position: 0% 40%; }
+      50% { background-position: 100% 60%; }
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 80% 50% at 20% -10%, rgba(201, 162, 92, 0.12), transparent 55%),
+        radial-gradient(ellipse 60% 40% at 100% 100%, rgba(90, 130, 180, 0.1), transparent 50%);
+      z-index: 0;
+    }
+
+    .shell {
+      position: relative;
+      z-index: 1;
+      max-width: 38rem;
       margin: 0 auto;
-      padding: 2rem 1.25rem;
-      line-height: 1.6;
-      color: #1a1a1a;
-      background: #faf8f5;
+      padding: clamp(1.75rem, 5vw, 2.75rem);
+      border-radius: 20px;
+      background: rgba(18, 24, 36, 0.72);
+      border: 1px solid rgba(201, 162, 92, 0.22);
+      box-shadow:
+        0 4px 24px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      animation: cardRise 1s cubic-bezier(0.22, 1, 0.36, 1) both;
     }
+
+    @keyframes cardRise {
+      from {
+        opacity: 0;
+        transform: translateY(28px) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
     h1 {
-      font-size: 1.65rem;
-      font-weight: 600;
-      margin: 0 0 0.25rem;
-      color: #2c2416;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: clamp(1.85rem, 5vw, 2.45rem);
+      font-weight: 700;
+      font-style: italic;
+      line-height: 1.2;
+      margin: 0 0 0.5rem;
+      letter-spacing: 0.02em;
+      background: linear-gradient(
+        110deg,
+        #f4e4bc 0%,
+        #c9a25c 35%,
+        #e8d5a3 55%,
+        #c9a25c 75%,
+        #f4e4bc 100%
+      );
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      animation: titleShine 6s ease-in-out infinite, titleIn 1.1s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+      text-shadow: none;
+      filter: drop-shadow(0 2px 20px rgba(201, 162, 92, 0.25));
     }
-    .date {
-      font-size: 0.95rem;
-      color: #5c5346;
-      margin-bottom: 2rem;
+
+    @keyframes titleIn {
+      from {
+        opacity: 0;
+        letter-spacing: 0.12em;
+        transform: translateY(-12px);
+      }
+      to {
+        opacity: 1;
+        letter-spacing: 0.02em;
+        transform: translateY(0);
+      }
     }
-    section {
-      margin-bottom: 1.75rem;
+
+    @keyframes titleShine {
+      0%, 100% { background-position: 0% center; }
+      50% { background-position: 100% center; }
     }
-    h2 {
-      font-size: 1rem;
+
+    .title-line {
+      height: 3px;
+      width: 0;
+      max-width: 12rem;
+      border-radius: 2px;
+      margin-bottom: 1.25rem;
+      background: linear-gradient(90deg, #c9a25c, rgba(201, 162, 92, 0.2));
+      animation: lineGrow 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.5s forwards;
+    }
+
+    @keyframes lineGrow {
+      to { width: 100%; }
+    }
+
+    .date-block {
+      margin: 0 0 2rem;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.55s forwards;
+    }
+
+    .date-block label {
+      display: block;
+      font-size: 0.78rem;
       font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: #6b5d4a;
-      margin: 0 0 0.65rem;
+      letter-spacing: 0.14em;
+      color: #c9a25c;
+      margin-bottom: 0.5rem;
     }
-    p { margin: 0.35rem 0; }
+
+    .date-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.75rem 1rem;
+    }
+
+    input[type="date"] {
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 500;
+      padding: 0.5rem 0.75rem;
+      border-radius: 10px;
+      border: 1px solid rgba(201, 162, 92, 0.35);
+      background: rgba(255, 255, 255, 0.08);
+      color: #e8e4dc;
+      color-scheme: dark;
+    }
+
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      filter: invert(0.85) sepia(0.2);
+      cursor: pointer;
+    }
+
+    .date-formatted {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #d4dce6;
+      letter-spacing: 0.04em;
+    }
+
+    section {
+      margin-bottom: 1.85rem;
+      opacity: 0;
+      animation: fadeUp 0.75s ease forwards;
+    }
+
+    section:nth-of-type(1) { animation-delay: 0.7s; }
+    section:nth-of-type(2) { animation-delay: 0.9s; }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h2 {
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #c9a25c;
+      margin: 0 0 0.75rem;
+    }
+
+    p { margin: 0.4rem 0; color: #d4dce6; }
+    p strong { color: #f0e6d4; font-weight: 600; }
+
+    .parents-grid {
+      display: grid;
+      gap: 1.25rem;
+    }
+
+    @media (min-width: 520px) {
+      .parents-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .parent-card p {
+      margin: 0 0 0.6rem;
+    }
+
+    .photo-wrap {
+      position: relative;
+    }
+
+    .photodrop {
+      display: block;
+      position: relative;
+      min-height: 160px;
+      border-radius: 12px;
+      border: 2px dashed rgba(201, 162, 92, 0.4);
+      background: rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      overflow: hidden;
+      transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .photodrop:hover,
+    .photodrop:focus-within {
+      border-color: rgba(201, 162, 92, 0.65);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .photodrop.drag {
+      border-color: #c9a25c;
+      box-shadow: 0 0 0 2px rgba(201, 162, 92, 0.25);
+    }
+
+    .photodrop.has-photo {
+      border-style: solid;
+      border-color: rgba(201, 162, 92, 0.35);
+    }
+
+    .photofile {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .photodrop-inner {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.75rem;
+      text-align: center;
+    }
+
+    .photohint {
+      font-size: 0.82rem;
+      color: #9eb4c8;
+      line-height: 1.4;
+      pointer-events: none;
+    }
+
+    .photopreview {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+
+    .photopreview[src] {
+      display: block;
+    }
+
+    .photodrop.has-photo .photohint {
+      display: none;
+    }
+
+    .photoclear {
+      margin-top: 0.45rem;
+      font-family: inherit;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: #9eb4c8;
+      background: none;
+      border: none;
+      padding: 0.2rem 0;
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .photoclear:hover {
+      color: #c9a25c;
+    }
+
+    .photoclear:focus-visible {
+      outline: 2px solid #c9a25c;
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+
+    .photoclear[hidden] {
+      display: none !important;
+    }
+
     .puppies {
       display: flex;
-      gap: 1.5rem;
+      gap: 0.85rem;
       flex-wrap: wrap;
     }
+
     .puppies span {
-      background: #fff;
-      padding: 0.5rem 0.85rem;
-      border-radius: 6px;
-      border: 1px solid #e5dfd4;
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.06);
+      padding: 0.55rem 1rem;
+      border-radius: 10px;
+      border: 1px solid rgba(201, 162, 92, 0.28);
+      color: #e8e4dc;
+      transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+      animation: chipPop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+
+    .puppies span:nth-child(1) { animation-delay: 1.05s; }
+    .puppies span:nth-child(2) { animation-delay: 1.2s; }
+
+    @keyframes chipPop {
+      from {
+        opacity: 0;
+        transform: scale(0.85) translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    .puppies span:hover {
+      transform: translateY(-3px);
+      border-color: rgba(201, 162, 92, 0.55);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      body,
+      h1,
+      .title-line,
+      .date-block,
+      section,
+      .puppies span {
+        animation: none !important;
+      }
+      body { background-size: 100% 100%; }
+      .shell,
+      .date-block,
+      section,
+      .puppies span {
+        opacity: 1;
+        transform: none;
+      }
+      .title-line { width: 12rem; }
+      h1 {
+        background: linear-gradient(110deg, #f4e4bc, #c9a25c, #e8d5a3);
+        -webkit-background-clip: text;
+        background-clip: text;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>Презентация помета питомника Lordes Pride</h1>
-  <p class="date">24.12.2026</p>
+  <div class="shell">
+    <h1>Презентация помета питомника Lordes Pride</h1>
+    <div class="title-line" aria-hidden="true"></div>
 
-  <section>
-    <h2>Родители</h2>
-    <p>Отец — <strong>Зидан</strong></p>
-    <p>Мать — <strong>Береника</strong></p>
-  </section>
-
-  <section>
-    <h2>Щенки</h2>
-    <div class="puppies">
-      <span>2 мальчика</span>
-      <span>5 девочек</span>
+    <div class="date-block">
+      <label for="litterDate">Дата помета</label>
+      <div class="date-row">
+        <input type="date" id="litterDate" value="2026-12-24">
+        <p class="date-formatted" id="dateFormatted" aria-live="polite">24.12.2026</p>
+      </div>
     </div>
-  </section>
+
+    <section>
+      <h2>Родители</h2>
+      <div class="parents-grid">
+        <div class="parent-card">
+          <p>Отец — <strong>Зидан</strong></p>
+          <div class="photo-wrap">
+            <label class="photodrop" data-role="sire">
+              <input type="file" class="photofile" accept="image/*">
+              <span class="photodrop-inner">
+                <span class="photohint">Нажмите или перетащите фото сюда</span>
+                <img class="photopreview" alt="Фото Зидана">
+              </span>
+            </label>
+            <button type="button" class="photoclear" hidden>Убрать фото</button>
+          </div>
+        </div>
+        <div class="parent-card">
+          <p>Мать — <strong>Береника</strong></p>
+          <div class="photo-wrap">
+            <label class="photodrop" data-role="dam">
+              <input type="file" class="photofile" accept="image/*">
+              <span class="photodrop-inner">
+                <span class="photohint">Нажмите или перетащите фото сюда</span>
+                <img class="photopreview" alt="Фото Береники">
+              </span>
+            </label>
+            <button type="button" class="photoclear" hidden>Убрать фото</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Щенки</h2>
+      <div class="puppies">
+        <span>2 мальчика</span>
+        <span>5 девочек</span>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    (function () {
+      var STORAGE_DATE = "lordesPride_litterDate";
+
+      var litterDate = document.getElementById("litterDate");
+      var dateFormatted = document.getElementById("dateFormatted");
+
+      function formatRu(iso) {
+        if (!iso) return "";
+        var parts = iso.split("-");
+        if (parts.length !== 3) return iso;
+        return parts[2] + "." + parts[1] + "." + parts[0];
+      }
+
+      function syncDateDisplay() {
+        dateFormatted.textContent = formatRu(litterDate.value);
+      }
+
+      function saveDate() {
+        try {
+          localStorage.setItem(STORAGE_DATE, litterDate.value);
+        } catch (e) { /* ignore */ }
+      }
+
+      var saved = localStorage.getItem(STORAGE_DATE);
+      if (saved && /^\d{4}-\d{2}-\d{2}$/.test(saved)) {
+        litterDate.value = saved;
+      }
+      syncDateDisplay();
+
+      litterDate.addEventListener("change", function () {
+        syncDateDisplay();
+        saveDate();
+      });
+      litterDate.addEventListener("input", syncDateDisplay);
+
+      function setupPhoto(wrap) {
+        var drop = wrap.querySelector(".photodrop");
+        var input = wrap.querySelector(".photofile");
+        var img = wrap.querySelector(".photopreview");
+        var clearBtn = wrap.querySelector(".photoclear");
+        var url = null;
+
+        function revoke() {
+          if (url) {
+            URL.revokeObjectURL(url);
+            url = null;
+          }
+        }
+
+        function setFile(file) {
+          if (!file || file.type.indexOf("image/") !== 0) return;
+          revoke();
+          url = URL.createObjectURL(file);
+          img.src = url;
+          drop.classList.add("has-photo");
+          clearBtn.hidden = false;
+        }
+
+        input.addEventListener("change", function () {
+          var f = input.files && input.files[0];
+          if (f) setFile(f);
+        });
+
+        clearBtn.addEventListener("click", function (e) {
+          e.preventDefault();
+          revoke();
+          img.removeAttribute("src");
+          drop.classList.remove("has-photo");
+          clearBtn.hidden = true;
+          input.value = "";
+        });
+
+        drop.addEventListener("dragover", function (e) {
+          e.preventDefault();
+          drop.classList.add("drag");
+        });
+        drop.addEventListener("dragleave", function (e) {
+          if (!drop.contains(e.relatedTarget)) drop.classList.remove("drag");
+        });
+        drop.addEventListener("drop", function (e) {
+          e.preventDefault();
+          drop.classList.remove("drag");
+          var f = e.dataTransfer.files && e.dataTransfer.files[0];
+          if (f) setFile(f);
+        });
+      }
+
+      document.querySelectorAll(".photo-wrap").forEach(setupPhoto);
+    })();
+  </script>
 </body>
 </html>
